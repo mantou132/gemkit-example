@@ -9,7 +9,8 @@
   },
   "dependencies": {
     "@mantou/gem": "link:../gem/packages/gem",
-    "@mantou/gemkit": "link:../gem/packages/gemkit"
+    "@mantou/gemkit": "link:../gem/packages/gemkit",
+    "marked": "^18.1.0"
   },
   "devDependencies": {
     "@rsbuild/core": "^2.0.15",

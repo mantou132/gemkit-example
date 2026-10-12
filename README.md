@@ -3,6 +3,9 @@
 A blog written with [Gem](https://github.com/mantou132/gem) and gemkit: file-based routing, nested layouts,
 i18n (`/` and `/zh`), server-side rendering and prerendering.
 
+Posts are markdown files in `content/posts`, read with `node:fs` and rendered with `marked` in
+`src/pages/blog/[slug].server.ts`, which only runs on the server.
+
 ```bash
 pnpm install
 pnpm dev      # dev server with SSR

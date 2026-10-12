@@ -2,9 +2,10 @@ import { adoptedStyle, css, GemElement, html, property, template } from '@mantou
 import { page } from '@mantou/gemkit';
 
 import { i18n } from '$gemkit/i18n';
-import { getPost, type Post, postList } from '../../posts';
+import type { PostData } from './[slug].server';
 
 import '@mantou/gem/elements/link';
+import '../../elements/markdown';
 
 const style = css`
   h1 {
@@ -14,30 +15,22 @@ const style = css`
   time {
     color: var(--muted);
   }
-  pre {
-    overflow: auto;
-    padding: 1em;
-    border-radius: 8px;
-    background: var(--card);
-    border: 1px solid var(--border);
-  }
 `;
 
-@page<{ slug: string }, Post | undefined>({
-  load: ({ slug }) => getPost(slug),
+// 数据来自同名的 `[slug].server.ts`
+@page<{ slug: string }, PostData | null>({
   title: (_, post) => post?.title || i18n.get('notFound'),
-  paths: () => postList.map(({ slug }) => ({ slug })),
 })
 @adoptedStyle(style)
 export default class PostPage extends GemElement {
-  @property data?: Post;
+  @property data?: PostData | null;
 
   @template()
   #content = () => html`
     <article>
       <h1>${this.data!.title}</h1>
       <time>${this.data!.date}</time>
-      ${this.data!.content}
+      <app-markdown .html=${this.data!.html}></app-markdown>
     </article>
   `;
 

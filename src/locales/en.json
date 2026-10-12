@@ -1,0 +1,20 @@
+{
+  "home": "Home",
+  "blog": "Blog",
+  "about": "About",
+  "heroTitle": "Write content with Gem, ship it fast",
+  "heroSubtitle": "File-based routing, layouts, i18n, server-side rendering and static generation for Gem web components.",
+  "readBlog": "Read the blog",
+  "learnMore": "About this site",
+  "featureRouting": "File-based routing",
+  "featureRoutingDesc": "Every file in src/pages is a route. Nested _layout files keep their state across navigation.",
+  "featureSSR": "SSR & SSG",
+  "featureSSRDesc": "Pages are rendered on the server and hydrated on the client. Static routes are prerendered at build time.",
+  "featureI18n": "Built-in i18n",
+  "featureI18nDesc": "Drop JSON files into src/locales and every route is available under a language prefix.",
+  "latestPosts": "Latest posts",
+  "allPosts": "All posts",
+  "notFound": "Page not found",
+  "backHome": "Back to home",
+  "aboutContent": "This is an example of gemkit. The whole page you are reading was rendered on the server, then the Gem elements took over on the client without re-rendering."
+}

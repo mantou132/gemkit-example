@@ -1,0 +1,20 @@
+{
+  "home": "首页",
+  "blog": "博客",
+  "about": "关于",
+  "heroTitle": "用 Gem 写内容，首屏秒开",
+  "heroSubtitle": "为 Gem 组件提供基于文件的路由、布局、国际化、服务端渲染和静态生成。",
+  "readBlog": "阅读博客",
+  "learnMore": "关于本站",
+  "featureRouting": "文件路由",
+  "featureRoutingDesc": "src/pages 中的每个文件都是一个路由，嵌套的 _layout 在导航时保持状态。",
+  "featureSSR": "SSR 和 SSG",
+  "featureSSRDesc": "页面在服务端渲染，在客户端水合。静态路由在构建时预渲染。",
+  "featureI18n": "内置国际化",
+  "featureI18nDesc": "把 JSON 文件放进 src/locales，每个路由都可以通过语言前缀访问。",
+  "latestPosts": "最新文章",
+  "allPosts": "全部文章",
+  "notFound": "页面不存在",
+  "backHome": "返回首页",
+  "aboutContent": "这是 gemkit 的示例。你正在阅读的页面在服务端渲染，然后 Gem 元素在客户端接管，不需要重新渲染。"
+}

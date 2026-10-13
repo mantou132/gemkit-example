@@ -1,9 +1,5 @@
-import { adoptedStyle, css, GemElement, html, template } from '@mantou/gem';
-
 import { i18n } from '$gemkit/i18n';
 import { postList } from '../../posts';
-
-import '@mantou/gem/elements/link';
 
 const style = css`
   :scope {

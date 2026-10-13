@@ -1,8 +1,6 @@
-import { adoptedStyle, classMap, connectStore, css, GemElement, history, html, template } from '@mantou/gem';
+import { history } from '@mantou/gem';
 
 import { i18n, languages, localizePath } from '$gemkit/i18n';
-
-import '@mantou/gem/elements/link';
 
 const style = css`
   :scope {

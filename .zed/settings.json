@@ -1,0 +1,5 @@
+{
+  "languages": {
+    "TypeScript": { "language_servers": ["ts-gem-lsp", "!vtsls", "!typescript-language-server", "..."] }
+  }
+}

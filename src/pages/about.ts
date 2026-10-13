@@ -1,4 +1,3 @@
-import { GemElement, html, template } from '@mantou/gem';
 import { page } from '@mantou/gemkit';
 
 import { i18n } from '$gemkit/i18n';

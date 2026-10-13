@@ -1,11 +1,7 @@
-import { adoptedStyle, css, GemElement, html, template } from '@mantou/gem';
 import { page } from '@mantou/gemkit';
 
 import { i18n } from '$gemkit/i18n';
 import { postList } from '../posts';
-
-import '@mantou/gem/elements/link';
-import '../elements/post-card';
 
 const style = css`
   .hero {

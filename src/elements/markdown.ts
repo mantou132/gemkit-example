@@ -1,5 +1,3 @@
-import { adoptedStyle, css, customElement, GemElement, property, shadow, template } from '@mantou/gem';
-
 const style = css`
   :host {
     display: block;

@@ -1,11 +1,7 @@
-import { adoptedStyle, css, GemElement, html, property, template } from '@mantou/gem';
 import { page } from '@mantou/gemkit';
 
 import { i18n } from '$gemkit/i18n';
 import type { PostData } from './[slug].server';
-
-import '@mantou/gem/elements/link';
-import '../../elements/markdown';
 
 const style = css`
   h1 {

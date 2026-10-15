@@ -13,20 +13,25 @@ const style = css`
   }
 `;
 
-// 数据来自同名的 `[slug].server.ts`
-@page<{ slug: string }, PostData | null>({
+type Post = PostData & { minutes: number };
+
+// 服务端数据来自同名的 `[slug].server.ts`，`load` 的第二个参数是服务端数据
+@page<{ slug: string }, Post | null>({
+  load: (_, post: PostData | null) => post && { ...post, minutes: Math.max(1, Math.round(post.words / 200)) },
   title: (_, post) => post?.title || i18n.get('notFound'),
 })
 @adoptedStyle(style)
 export default class PostPage extends GemElement {
-  @property data?: PostData | null;
+  @property params?: { slug: string };
+  @property data?: Post | null;
 
   @template()
   #content = () => html`
     <article>
       <h1>${this.data!.title}</h1>
-      <time>${this.data!.date}</time>
-      <app-markdown .html=${this.data!.html}></app-markdown>
+      <time>${this.data!.date}</time> · ${this.data!.minutes} ${i18n.get('minRead')}
+      <app-markdown slug=${this.params!.slug}></app-markdown>
+      <app-like-button></app-like-button>
     </article>
   `;
 

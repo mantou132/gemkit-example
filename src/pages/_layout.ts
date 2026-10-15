@@ -1,6 +1,8 @@
 import { history } from '@mantou/gem';
+import { layout, server } from '@mantou/gemkit';
 
 import { i18n, languages, localizePath } from '$gemkit/i18n';
+import { renderStore } from '../stores';
 
 const style = css`
   :scope {
@@ -64,9 +66,18 @@ const style = css`
   }
 `;
 
+// 同构的 `load`，服务端渲染的结果在水合时直接使用
+@layout({ load: () => ({ year: new Date().getFullYear() }) })
 @adoptedStyle(style)
 @connectStore(history.store)
+@connectStore(renderStore)
 export default class RootLayout extends GemElement {
+  @property data?: { year: number };
+
+  // 只在服务端执行，更新的 store 会同步到客户端
+  @server()
+  #init = () => renderStore({ renderedAt: new Date().toISOString() });
+
   @template()
   #content = () => html`
     <header class="header">
@@ -84,6 +95,6 @@ export default class RootLayout extends GemElement {
       </div>
     </header>
     <main><gemkit-outlet></gemkit-outlet></main>
-    <footer>Built with Gem + gemkit</footer>
+    <footer>© ${this.data?.year} · Built with Gem + gemkit · ${i18n.get('renderedAt')} <time>${renderStore.renderedAt}</time></footer>
   `;
 }

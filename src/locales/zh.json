@@ -16,5 +16,12 @@
   "allPosts": "全部文章",
   "notFound": "页面不存在",
   "backHome": "返回首页",
-  "aboutContent": "这是 gemkit 的示例。你正在阅读的页面在服务端渲染，然后 Gem 元素在客户端接管，不需要重新渲染。"
+  "aboutContent": "这是 gemkit 的示例。你正在阅读的页面在服务端渲染，然后 Gem 元素在客户端接管，不需要重新渲染。",
+  "archive": "归档",
+  "words": "字",
+  "noPosts": "没有文章",
+  "minRead": "分钟阅读",
+  "renderedAt": "渲染于",
+  "loading": "加载中…",
+  "serverInfo": "这部分在服务端等待了一个慢接口，在页面其他部分之后流式输出。文章数："
 }

@@ -1,3 +1,9 @@
+import { readFile } from 'node:fs/promises';
+import path from 'node:path';
+
+import { server } from '@mantou/gemkit';
+import { marked } from 'marked';
+
 const style = css`
   :host {
     display: block;
@@ -21,28 +27,30 @@ const style = css`
 `;
 
 /**
- * 渲染服务端生成的 HTML
+ * 纯服务端元素：在服务端读取文章并转换成 HTML
  *
- * 水合时内容已经在服务端渲染的 ShadowDOM 中，不需要再次设置
+ * 客户端不加载这个元素，`node:fs` 和 `marked` 不会打包到客户端，
+ * 客户端导航时从服务端获取渲染好的 HTML
  */
 @customElement('app-markdown')
 @adoptedStyle(style)
 @shadow()
+@server()
 export class AppMarkdownElement extends GemElement {
-  @property html?: string;
+  @attribute slug: string;
 
-  #rendered?: string;
+  #state = createState({ html: '' });
+
+  @server()
+  #load = async () => {
+    const markdown = await readFile(path.resolve('content/posts', `${this.slug}.md`), 'utf8');
+    this.#state({ html: await marked.parse(markdown) });
+  };
 
   @template()
   #content = () => {
-    const root = this.shadowRoot!;
-    if (this.#rendered === undefined && root.querySelector(':not(style)')) {
-      this.#rendered = this.html;
-    } else if (this.#rendered !== this.html) {
-      this.#rendered = this.html;
-      root.innerHTML = this.html || '';
-    }
-    // 不更新内容
+    this.shadowRoot!.innerHTML = this.#state.html;
+    // 内容是 HTML 字符串，不使用模版
     return undefined;
   };
 }

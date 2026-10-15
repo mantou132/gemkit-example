@@ -16,5 +16,12 @@
   "allPosts": "All posts",
   "notFound": "Page not found",
   "backHome": "Back to home",
-  "aboutContent": "This is an example of gemkit. The whole page you are reading was rendered on the server, then the Gem elements took over on the client without re-rendering."
+  "aboutContent": "This is an example of gemkit. The whole page you are reading was rendered on the server, then the Gem elements took over on the client without re-rendering.",
+  "archive": "Archive",
+  "words": "words in total",
+  "noPosts": "No posts",
+  "minRead": "min read",
+  "renderedAt": "Rendered at",
+  "loading": "Loading…",
+  "serverInfo": "This block waited for a slow API on the server and was streamed after the rest of the page. Posts:"
 }

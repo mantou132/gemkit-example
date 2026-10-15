@@ -85,6 +85,7 @@ export default class RootLayout extends GemElement {
       <nav>
         <gem-active-link path="/">${i18n.get('home')}</gem-active-link>
         <gem-active-link path="/blog" pattern="/blog/*">${i18n.get('blog')}</gem-active-link>
+        <gem-active-link path="/guestbook">${i18n.get('guestbook')}</gem-active-link>
         <gem-active-link path="/about">${i18n.get('about')}</gem-active-link>
       </nav>
       <div class="langs">

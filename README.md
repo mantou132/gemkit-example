@@ -1,7 +1,8 @@
 # gemkit example
 
 A blog written with [Gem](https://github.com/mantou132/gem) and gemkit: file-based routing, nested layouts,
-i18n (`/` and `/zh`), server-side rendering and prerendering.
+i18n (`/` and `/zh`), server-side rendering and prerendering, plus a guestbook rendered on every request with
+cookies and form actions.
 
 Posts are markdown files in `content/posts`, read with `node:fs` and rendered with `marked` by the server element
 `<app-markdown>`, which only runs on the server.
@@ -26,11 +27,15 @@ Posts are markdown files in `content/posts`, read with `node:fs` and rendered wi
 | Auto-imported `app-*` elements | `src/elements` |
 | Custom HTML template | `src/index.html` |
 | Prerendering, `__data.json` for static hosting | `pnpm build`, `dist/web` |
+| `cookies` in `load`, `prerender = false` | `src/pages/guestbook.server.ts` (`/guestbook`) |
+| Form `actions` with `redirect`, works without JS | `src/pages/guestbook.server.ts` |
+| `submitAction`: submit without reloading, show the action result | `src/pages/guestbook.ts` |
+| Query-only navigation reloads data (`?page=2`) | pagination in `src/pages/guestbook.ts` |
 
 ```bash
 pnpm install
 pnpm dev      # dev server with SSR
-pnpm build    # dist/web can be deployed to any static host
+pnpm build    # dist/web can be deployed to any static host (except the guestbook)
 pnpm start    # serve dist with SSR fallback
 ```
 

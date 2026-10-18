@@ -21,7 +21,9 @@ Posts are markdown files in `content/posts`, read with `node:fs` and rendered wi
 | Store sync, updated on the server and used by hydration | `src/stores.ts`, `@server` in `src/pages/_layout.ts` |
 | `@server` element state and streaming of slow content | `src/elements/server-info.ts` on `/about` |
 | Server element, `node:fs` and `marked` stay on the server | `src/elements/markdown.ts` on blog posts |
-| Lazy view, loaded on the first click | `src/elements/like-button.ts` on blog posts |
+| Lazy view `@lazy()`, loaded on the first click | `src/elements/share-button.ts` on blog posts |
+| Lazy view `@lazy({ on: 'visible' })`, loaded when visible | `src/elements/like-button.ts` on blog posts |
+| API route, a `*.server.ts` without a page (`/api/likes/:slug`) | `src/pages/api/likes/[slug].server.ts`, used by `src/elements/like-button.ts` on prerendered blog posts |
 | i18n, `$gemkit/i18n` | `src/locales`, language switch in `src/pages/_layout.ts` |
 | Global styles | `src/app.ts` |
 | Auto-imported `app-*` elements | `src/elements` |
@@ -35,7 +37,7 @@ Posts are markdown files in `content/posts`, read with `node:fs` and rendered wi
 ```bash
 pnpm install
 pnpm dev      # dev server with SSR
-pnpm build    # dist/web can be deployed to any static host (except the guestbook)
+pnpm build    # dist/web can be deployed to any static host (except the guestbook and likes)
 pnpm start    # serve dist with SSR fallback
 ```
 

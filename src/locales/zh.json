@@ -32,5 +32,7 @@
   "required": "名字和留言都不能为空",
   "noEntries": "还没有留言",
   "previous": "上一页",
-  "next": "下一页"
+  "next": "下一页",
+  "share": "复制链接",
+  "copied": "已复制链接"
 }

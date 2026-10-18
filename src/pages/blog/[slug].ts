@@ -11,6 +11,10 @@ const style = css`
   time {
     color: var(--muted);
   }
+  .actions {
+    display: flex;
+    gap: 0.75em;
+  }
 `;
 
 type Post = PostData & { minutes: number };
@@ -31,7 +35,10 @@ export default class PostPage extends GemElement {
       <h1>${this.data!.title}</h1>
       <time>${this.data!.date}</time> · ${this.data!.minutes} ${i18n.get('minRead')}
       <app-markdown slug=${this.params!.slug}></app-markdown>
-      <app-like-button></app-like-button>
+      <div class="actions">
+        <app-like-button slug=${this.params!.slug}></app-like-button>
+        <app-share-button></app-share-button>
+      </div>
     </article>
   `;
 

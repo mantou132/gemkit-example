@@ -1,4 +1,4 @@
-import { server } from '@mantou/gemkit';
+import { lazy } from '@mantou/gemkit';
 
 const style = css`
   button {
@@ -13,19 +13,33 @@ const style = css`
 `;
 
 /**
- * 延时视图：服务端渲染，客户端在第一次交互时才加载这个元素的代码，然后重放这次点击
+ * 延时视图：进入视口时才加载这个元素的代码，然后在客户端获取最新的点赞数，
+ * 点赞数由 API 路由 `/api/likes/:slug` 读写，文章页仍然预渲染
  *
- * 客户端导航时直接加载
+ * `@mounted()` 不加 `@server()`，水合后在客户端执行
  */
 @customElement('app-like-button')
 @adoptedStyle(style)
 @shadow()
-@server({ lazy: true })
+@lazy({ on: 'visible' })
 export class AppLikeButtonElement extends GemElement {
-  #state = createState({ likes: 0 });
+  @attribute slug: string;
 
-  #like = () => this.#state({ likes: this.#state.likes + 1 });
+  #state = createState({ likes: undefined as number | undefined });
+
+  #request = async (method: 'GET' | 'POST') => {
+    const res = await fetch(`/api/likes/${this.slug}`, { method });
+    if (res.ok) this.#state({ likes: (await res.json()).likes });
+  };
+
+  // 在文章之间导航时页面元素会重新创建，这个元素也是新的，不用处理 `slug` 改变
+  @mounted()
+  #load = () => {
+    this.#request('GET');
+  };
+
+  #like = () => this.#request('POST');
 
   @template()
-  #content = () => html`<button @click=${this.#like}>♥ ${this.#state.likes}</button>`;
+  #content = () => html`<button @click=${this.#like}>♥ ${this.#state.likes ?? ''}</button>`;
 }

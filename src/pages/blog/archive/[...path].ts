@@ -15,8 +15,8 @@ const style = css`
 
 @page<ArchiveParams, PostMeta[]>({
   // 同构的 `load`，服务端渲染、预渲染和客户端导航时都会执行
-  load: ({ 0: path }) => postList.filter((post) => post.date.startsWith(path.replaceAll('/', '-'))),
-  title: ({ 0: path }) => `${i18n.get('archive')} ${path}`,
+  load: ({ params: { 0: path } }) => postList.filter((post) => post.date.startsWith(path.replaceAll('/', '-'))),
+  title: ({ params: { 0: path } }) => `${i18n.get('archive')} ${path}`,
   // 预渲染所有年份和月份
   paths: () =>
     [...new Set(postList.flatMap(({ date }) => [date.slice(0, 4), date.slice(0, 7).replace('-', '/')]))].map(

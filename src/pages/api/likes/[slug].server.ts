@@ -12,7 +12,8 @@ const getSlug = ({ params }: Context) => {
   return params.slug;
 };
 
-// API 路由：没有同名页面模块的 `*.server.ts`，`/api/likes/:slug`，返回值作为 JSON 响应
+// API 路由：没有同名页面模块的 `*.server.ts`，`/api/likes/:slug`，返回值作为 JSON 响应，
+// 客户端使用 `apis.api.likes(slug).GET()` 调用
 export const GET = (ctx: Context) => ({ likes: likes.get(getSlug(ctx)) || 0 });
 
 export const POST = (ctx: Context) => {

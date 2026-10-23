@@ -1,4 +1,4 @@
-import { redirect, type ServerLoadContext } from '@mantou/gemkit';
+import type { ServerLoadContext } from '@mantou/gemkit';
 
 export interface Entry {
   name: string;

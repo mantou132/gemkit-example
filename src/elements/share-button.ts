@@ -1,7 +1,3 @@
-import { lazy } from '@mantou/gemkit';
-
-import { i18n } from '$gemkit/i18n';
-
 const style = css`
   button {
     padding: 0.4em 1em;

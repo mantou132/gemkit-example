@@ -1,6 +1,5 @@
-import { page, type Params, submitAction } from '@mantou/gemkit';
+import type { Params } from '@mantou/gemkit';
 
-import { i18n } from '$gemkit/i18n';
 import type { GuestbookData } from './guestbook.server';
 
 const style = css`

@@ -1,6 +1,3 @@
-import { page } from '@mantou/gemkit';
-
-import { i18n } from '$gemkit/i18n';
 import type { PostData } from './[slug].server';
 
 const style = css`

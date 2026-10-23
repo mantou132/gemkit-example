@@ -1,7 +1,6 @@
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 
-import { server } from '@mantou/gemkit';
 import { marked } from 'marked';
 
 import { postList } from '../posts';

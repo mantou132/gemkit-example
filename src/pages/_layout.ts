@@ -1,7 +1,6 @@
 import { history } from '@mantou/gem';
-import { layout, server } from '@mantou/gemkit';
 
-import { i18n, languages, localizePath } from '$gemkit/i18n';
+import { languages, localizePath } from '$gemkit/i18n';
 import { renderStore } from '../stores';
 
 const style = css`

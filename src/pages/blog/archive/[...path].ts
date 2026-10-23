@@ -1,6 +1,3 @@
-import { page } from '@mantou/gemkit';
-
-import { i18n } from '$gemkit/i18n';
 import { type PostMeta, postList } from '../../../posts';
 
 // `[...path]` 匹配 `/blog/archive/2026` 和 `/blog/archive/2026/10`，匹配的部分是参数 `0`

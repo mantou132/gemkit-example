@@ -1,4 +1,4 @@
-import { notFound, type ServerLoadContext } from '@mantou/gemkit';
+import type { ServerLoadContext } from '@mantou/gemkit';
 
 import { postList } from '../../../posts';
 

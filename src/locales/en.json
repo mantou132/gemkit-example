@@ -23,5 +23,16 @@
   "minRead": "min read",
   "renderedAt": "Rendered at",
   "loading": "Loading…",
-  "serverInfo": "This block waited for a slow API on the server and was streamed after the rest of the page. Posts:"
+  "serverInfo": "This block waited for a slow API on the server and was streamed after the rest of the page. Posts:",
+  "guestbook": "Guestbook",
+  "guestbookDesc": "Rendered on every request: your name is remembered in a cookie, the form is handled by a server action and works without JavaScript.",
+  "name": "Name",
+  "message": "Message",
+  "sign": "Sign",
+  "required": "Name and message are required",
+  "noEntries": "No entries yet",
+  "previous": "Previous",
+  "next": "Next",
+  "share": "Copy link",
+  "copied": "Link copied"
 }

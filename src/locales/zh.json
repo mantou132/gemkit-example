@@ -23,5 +23,16 @@
   "minRead": "分钟阅读",
   "renderedAt": "渲染于",
   "loading": "加载中…",
-  "serverInfo": "这部分在服务端等待了一个慢接口，在页面其他部分之后流式输出。文章数："
+  "serverInfo": "这部分在服务端等待了一个慢接口，在页面其他部分之后流式输出。文章数：",
+  "guestbook": "留言板",
+  "guestbookDesc": "每次请求时渲染：名字记在 cookie 里，表单由服务端 action 处理，没有 JavaScript 也能提交。",
+  "name": "名字",
+  "message": "留言",
+  "sign": "留言",
+  "required": "名字和留言都不能为空",
+  "noEntries": "还没有留言",
+  "previous": "上一页",
+  "next": "下一页",
+  "share": "复制链接",
+  "copied": "已复制链接"
 }

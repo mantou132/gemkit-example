@@ -1,8 +1,9 @@
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 
-import { server } from '@mantou/gemkit';
 import { marked } from 'marked';
+
+import { postList } from '../posts';
 
 const style = css`
   :host {
@@ -43,7 +44,10 @@ export class AppMarkdownElement extends GemElement {
 
   @server()
   #load = async () => {
-    const markdown = await readFile(path.resolve('content/posts', `${this.slug}.md`), 'utf8');
+    // `slug` 可能来自客户端请求（客户端导航时渲染纯服务端元素），只读取文章列表中的文章
+    const post = postList.find((e) => e.slug === this.slug);
+    if (!post) return;
+    const markdown = await readFile(path.resolve('content/posts', `${post.slug}.md`), 'utf8');
     this.#state({ html: await marked.parse(markdown) });
   };
 

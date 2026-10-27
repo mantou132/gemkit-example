@@ -1,7 +1,3 @@
-import { page } from '@mantou/gemkit';
-
-import { i18n } from '$gemkit/i18n';
-
 @page({ title: () => i18n.get('about') })
 export default class AboutPage extends GemElement {
   @template()

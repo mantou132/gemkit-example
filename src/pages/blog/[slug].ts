@@ -1,6 +1,3 @@
-import { page } from '@mantou/gemkit';
-
-import { i18n } from '$gemkit/i18n';
 import type { PostData } from './[slug].server';
 
 const style = css`
@@ -11,19 +8,23 @@ const style = css`
   time {
     color: var(--muted);
   }
+  .actions {
+    display: flex;
+    gap: 0.75em;
+  }
 `;
 
 type Post = PostData & { minutes: number };
 
-// 服务端数据来自同名的 `[slug].server.ts`，`load` 的第二个参数是服务端数据
-@page<{ slug: string }, Post | null>({
-  load: (_, post: PostData | null) => post && { ...post, minutes: Math.max(1, Math.round(post.words / 200)) },
-  title: (_, post) => post?.title || i18n.get('notFound'),
+// 服务端数据来自同名的 `[slug].server.ts`，`load` 参数中的 `data` 是服务端数据
+@page<{ slug: string }, Post>({
+  load: ({ data: post }: { data: PostData }) => ({ ...post, minutes: Math.max(1, Math.round(post.words / 200)) }),
+  title: ({ data }) => data.title,
 })
 @adoptedStyle(style)
 export default class PostPage extends GemElement {
   @property params?: { slug: string };
-  @property data?: Post | null;
+  @property data?: Post;
 
   @template()
   #content = () => html`
@@ -31,13 +32,10 @@ export default class PostPage extends GemElement {
       <h1>${this.data!.title}</h1>
       <time>${this.data!.date}</time> · ${this.data!.minutes} ${i18n.get('minRead')}
       <app-markdown slug=${this.params!.slug}></app-markdown>
-      <app-like-button></app-like-button>
+      <div class="actions">
+        <app-like-button slug=${this.params!.slug}></app-like-button>
+        <app-share-button></app-share-button>
+      </div>
     </article>
-  `;
-
-  @template((i) => !i.data)
-  #notFound = () => html`
-    <h1>${i18n.get('notFound')}</h1>
-    <gem-link path="/blog">${i18n.get('allPosts')}</gem-link>
   `;
 }

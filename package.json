@@ -8,18 +8,13 @@
     "start": "gemkit start"
   },
   "dependencies": {
-    "@mantou/gem": "^2.2.15",
-    "@mantou/gemkit": "^0.0.2",
+    "@mantou/gem": "^2.3.1",
+    "@mantou/gemkit": "^0.2.0",
     "marked": "^18.1.0"
   },
   "devDependencies": {
     "@rsbuild/core": "^2.0.15",
     "@types/node": "^26.6.5",
     "typescript": "^7.0.2"
-  },
-  "pnpm": {
-    "overrides": {
-      "@swc/core": "1.15.40"
-    }
   }
 }

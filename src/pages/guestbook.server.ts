@@ -35,7 +35,7 @@ export function load({ url, cookies }: ServerLoadContext): GuestbookData {
   };
 }
 
-// 表单提交到 `?/sign`，返回值交给 `submitAction`，跳转回第一页
+// 表单提交到 `?/sign`，返回值交给页面中 `formActions` 的回调，跳转回第一页
 export const actions = {
   sign: async ({ request, cookies, url }: ServerLoadContext) => {
     const form = await request.formData();

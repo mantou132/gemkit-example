@@ -1,6 +1,8 @@
 import type { Params } from '@mantou/gemkit';
 
-import type { GuestbookData } from './guestbook.server';
+import type { actions, GuestbookData } from './guestbook.server';
+
+const { sign } = formActions<typeof actions>();
 
 const style = css`
   form {
@@ -65,11 +67,8 @@ export default class GuestbookPage extends GemElement {
 
   #state = createState({ error: '' });
 
-  // 不刷新页面提交，没有 JS 时表单也能原生提交
-  #submit = async (evt: SubmitEvent) => {
-    evt.preventDefault();
-    const form = evt.target as HTMLFormElement;
-    const result = (await submitAction(form, evt.submitter)) as { error: string } | undefined;
+  // 不刷新页面提交，没有 JS 时表单也能原生提交，成功后清空输入
+  #onSign: Parameters<typeof sign>[0] = (result, form) => {
     this.#state({ error: result?.error || '' });
     if (!result) form.reset();
   };
@@ -78,7 +77,7 @@ export default class GuestbookPage extends GemElement {
   #content = () => html`
     <h1>${i18n.get('guestbook')}</h1>
     <p>${i18n.get('guestbookDesc')}</p>
-    <form method="post" action="?/sign" @submit=${this.#submit}>
+    <form ${sign(this.#onSign)}>
       <input name="name" placeholder=${i18n.get('name')} value=${this.data?.name || ''} />
       <textarea name="message" rows="3" maxlength="200" placeholder=${i18n.get('message')}></textarea>
       <p class="error" v-if=${!!this.#state.error}>${i18n.get('required')}</p>

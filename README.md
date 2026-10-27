@@ -41,4 +41,16 @@ pnpm build    # dist/web can be deployed to any static host (except the guestboo
 pnpm start    # serve dist with SSR fallback
 ```
 
+## Deploy to Cloudflare
+
+`wrangler.jsonc` makes the build output a Worker (`dist/cloudflare/index.js`) with `dist/web` as static assets:
+
+```bash
+pnpm build
+wrangler deploy
+```
+
+Blog posts read markdown with `node:fs`, which only works at build time, so they are prerendered. The guestbook and likes
+are kept in the Worker's memory, they reset when the isolate restarts and aren't shared between locations.
+
 `@mantou/gemkit` is not published yet, the dependencies link to a local checkout of the Gem repo at `../gem`.

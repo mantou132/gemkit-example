@@ -1,0 +1,11 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "gemkit-example",
+  // gemkit 构建时输出，入口中包含 HTML 模版
+  "main": "dist/cloudflare/index.js",
+  "compatibility_date": "2026-03-01",
+  // gem-ssr 使用 `AsyncLocalStorage` 隔离每个请求的状态
+  "compatibility_flags": ["nodejs_compat"],
+  // 预渲染的页面和客户端资源，其他请求由 Worker 处理；gemkit 的路径没有末尾的 `/`
+  "assets": { "directory": "dist/web", "html_handling": "drop-trailing-slash" }
+}

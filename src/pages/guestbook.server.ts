@@ -37,13 +37,13 @@ export function load({ url, cookies }: ServerLoadContext): GuestbookData {
 
 // 表单提交到 `?/sign`，返回值交给页面中 `formActions` 的回调，跳转回第一页
 export const actions = {
-  sign: async ({ request, cookies, url }: ServerLoadContext) => {
+  sign: async ({ request, cookies, path }: ServerLoadContext) => {
     const form = await request.formData();
     const name = String(form.get('name') || '').trim();
     const message = String(form.get('message') || '').trim();
     if (!name || !message) return { error: 'required' };
     entries.unshift({ name, message: message.slice(0, 200), date: new Date().toISOString().slice(0, 10) });
     cookies.set(NAME_COOKIE, name, { maxAge: 60 * 60 * 24 * 365 });
-    redirect(303, url.pathname);
+    redirect(303, path);
   },
 };

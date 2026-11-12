@@ -1,5 +1,3 @@
-import { history } from '@mantou/gem';
-
 import { languages, localizePath } from '$gemkit/i18n';
 import { renderStore } from '../stores';
 
@@ -68,7 +66,7 @@ const style = css`
 // 同构的 `load`，服务端渲染的结果在水合时直接使用
 @layout({ load: () => ({ year: new Date().getFullYear() }) })
 @adoptedStyle(style)
-@connectStore(history.store)
+@connectStore(routeStore)
 @connectStore(renderStore)
 export default class RootLayout extends GemElement {
   @property data?: { year: number };

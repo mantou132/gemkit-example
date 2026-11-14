@@ -10,10 +10,11 @@
   "dependencies": {
     "@mantou/gem": "link:../gem/packages/gem",
     "@mantou/gemkit": "link:../gem/packages/gemkit",
-    "marked": "^18.1.0"
+    "marked": "^18.1.0",
+    "zod": "^4.6.7"
   },
   "devDependencies": {
     "@rsbuild/core": "^2.0.15",
-    "typescript": "^7.0.2"
+    "typescript": "^7.1.0-beta"
   }
 }

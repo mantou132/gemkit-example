@@ -1,4 +1,5 @@
 import type { ServerLoadContext } from '@mantou/gemkit';
+import { z } from 'zod';
 
 import { postList } from '../../../posts';
 
@@ -16,8 +17,11 @@ const getSlug = ({ params }: Context) => {
 // 客户端使用 `apis.api.likes(slug).GET()` 调用
 export const GET = (ctx: Context) => ({ likes: likes.get(getSlug(ctx)) || 0 });
 
-export const POST = (ctx: Context) => {
+// `endpoint` 用 zod 校验 JSON 请求体，失败时响应 400；不传参数时请求体为空，使用默认值
+const LikeInput = z.object({ count: z.number().int().min(1).max(10).default(1) }).default({ count: 1 });
+
+export const POST = endpoint(LikeInput, (ctx: Context, { count }) => {
   const slug = getSlug(ctx);
-  likes.set(slug, (likes.get(slug) || 0) + 1);
+  likes.set(slug, (likes.get(slug) || 0) + count);
   return { likes: likes.get(slug)! };
-};
+});

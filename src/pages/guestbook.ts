@@ -62,14 +62,13 @@ const style = css`
 
 @page<Params, GuestbookData>({ title: () => i18n.get('guestbook') })
 @adoptedStyle(style)
+@connectStore(actionStore)
 export default class GuestbookPage extends GemElement {
   @property data?: GuestbookData;
 
-  #state = createState({ error: '' });
-
-  // 不刷新页面提交，没有 JS 时表单也能原生提交，成功后清空输入
+  // 不刷新页面提交，没有 JS 时表单也能原生提交，成功后清空输入；
+  // 错误从 `actionStore` 读取，没有 JS 时服务端渲染的页面中也有
   #onSign: Parameters<typeof sign>[0] = (result, form) => {
-    this.#state({ error: result?.error || '' });
     if (!result) form.reset();
   };
 
@@ -80,7 +79,7 @@ export default class GuestbookPage extends GemElement {
     <form ${sign(this.#onSign)}>
       <input name="name" placeholder=${i18n.get('name')} value=${this.data?.name || ''} />
       <textarea name="message" rows="3" maxlength="200" placeholder=${i18n.get('message')}></textarea>
-      <p class="error" v-if=${!!this.#state.error}>${i18n.get('required')}</p>
+      <p class="error" v-if=${actionStore.name === 'sign' && !!actionStore.data?.error}>${i18n.get('required')}</p>
       <button>${i18n.get('sign')}</button>
     </form>
     <ul>

@@ -50,7 +50,8 @@ export function load({ url, cookies }: ServerLoadContext): GuestbookData {
 export const actions = {
   sign: async ({ request, cookies, path }: ServerLoadContext) => {
     const parsed = SignInput.safeParse(Object.fromEntries(await request.formData()));
-    if (!parsed.success) return { error: 'required' };
+    // 没有 JS 时不跳转，使用 400 渲染当前页面，页面从 `actionStore` 读取错误
+    if (!parsed.success) return fail(400, { error: 'required' as const });
     const { name, message } = parsed.data;
     entries.unshift({ name, message, date: new Date().toISOString().slice(0, 10) });
     cookies.set(NAME_COOKIE, name, { maxAge: 60 * 60 * 24 * 365 });

@@ -1,5 +1,7 @@
 import type { FormActions, Params, ServerData } from './guestbook.$types';
 
+// 不刷新页面提交，没有 JS 时表单也能原生提交，提交地址保留 `?page=2`；
+// 回调的结果用 `type` 区分成功和失败，`sign.result` 从 `actionStore` 读取，没有 JS 时服务端渲染的页面中也有
 const { sign } = formActions<FormActions>();
 
 const style = css`
@@ -64,20 +66,14 @@ const style = css`
 export default class GuestbookPage extends GemElement {
   @property data?: ServerData;
 
-  // 不刷新页面提交，没有 JS 时表单也能原生提交，成功后清空输入；
-  // 错误从 `actionStore` 读取，没有 JS 时服务端渲染的页面中也有
-  #onSign: Parameters<typeof sign>[0] = (result, form) => {
-    if (!result) form.reset();
-  };
-
   @template()
   #content = () => html`
     <h1>${i18n.get('guestbook')}</h1>
     <p>${i18n.get('guestbookDesc')}</p>
-    <form ${sign(this.#onSign)}>
+    <form ${sign((result, form) => result.type !== 'failure' && form.reset())}>
       <input name="name" placeholder=${i18n.get('name')} value=${this.data?.name || ''} />
       <textarea name="message" rows="3" maxlength="200" placeholder=${i18n.get('message')}></textarea>
-      <p class="error" v-if=${actionStore.name === 'sign' && !!actionStore.data?.issues}>${i18n.get('required')}</p>
+      <p class="error" v-if=${sign.result?.type === 'failure'}>${i18n.get('required')}</p>
       <button>${i18n.get('sign')}</button>
     </form>
     <ul>

@@ -32,8 +32,8 @@ export class AppLikeButtonElement extends GemElement {
   @mounted()
   #load = async () => this.#setLikes(await apis.api.likes(this.slug).GET());
 
-  // 参数类型是 zod schema 的输出类型，服务端校验 `count`
-  #like = async () => this.#setLikes(await apis.api.likes(this.slug).POST({ count: 1 }));
+  // 参数类型是 zod schema 的输入类型，`count` 有默认值可以省略，服务端校验它
+  #like = async () => this.#setLikes(await apis.api.likes(this.slug).POST());
 
   @template()
   #content = () => html`<button @click=${this.#like}>♥ ${this.#state.likes ?? ''}</button>`;

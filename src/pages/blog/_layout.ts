@@ -1,5 +1,5 @@
 import { postList } from '../../posts';
-import type { BlogLayoutData } from './_layout.server';
+import type { ServerData } from './_layout.$types';
 
 const style = css`
   :scope {
@@ -48,7 +48,7 @@ const style = css`
 @layout()
 @adoptedStyle(style)
 export default class BlogLayout extends GemElement {
-  @property data?: BlogLayoutData;
+  @property data?: ServerData;
 
   @template()
   #content = () => html`

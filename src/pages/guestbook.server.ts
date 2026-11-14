@@ -1,5 +1,6 @@
-import type { ServerLoadContext } from '@mantou/gemkit';
 import { z } from 'zod';
+
+import type { Actions, ServerContext } from './guestbook.$types';
 
 export interface Entry {
   name: string;
@@ -18,7 +19,7 @@ export interface GuestbookData {
 const PAGE_SIZE = 5;
 const NAME_COOKIE = 'guestbook-name';
 
-// 表单 actions 不能使用 `endpoint`，用 zod 的 `safeParse` 校验 FormData
+// `action` 用它校验表单数据，失败时返回 `fail(400, { issues })`
 const SignInput = z.object({
   name: z.string().trim().min(1),
   message: z
@@ -35,7 +36,7 @@ const entries: Entry[] = [];
 export const prerender = false;
 
 // 只改变查询参数（`?page=2`）的客户端导航也会重新执行
-export function load({ url, cookies }: ServerLoadContext): GuestbookData {
+export function load({ url, cookies }: ServerContext): GuestbookData {
   const pages = Math.max(1, Math.ceil(entries.length / PAGE_SIZE));
   const page = Math.min(pages, Math.max(1, Number(url.searchParams.get('page')) || 1));
   return {
@@ -46,15 +47,12 @@ export function load({ url, cookies }: ServerLoadContext): GuestbookData {
   };
 }
 
-// 表单提交到 `?/sign`，返回值交给页面中 `formActions` 的回调，跳转回第一页
+// 表单提交到 `?/sign`，返回值交给页面中 `formActions` 的回调，跳转回第一页；
+// 校验失败时没有 JS 也不跳转，使用 400 渲染当前页面，页面从 `actionStore` 读取 `issues`
 export const actions = {
-  sign: async ({ request, cookies, path }: ServerLoadContext) => {
-    const parsed = SignInput.safeParse(Object.fromEntries(await request.formData()));
-    // 没有 JS 时不跳转，使用 400 渲染当前页面，页面从 `actionStore` 读取错误
-    if (!parsed.success) return fail(400, { error: 'required' as const });
-    const { name, message } = parsed.data;
+  sign: action(SignInput, ({ cookies, path }, { name, message }) => {
     entries.unshift({ name, message, date: new Date().toISOString().slice(0, 10) });
     cookies.set(NAME_COOKIE, name, { maxAge: 60 * 60 * 24 * 365 });
     redirect(303, path);
-  },
-};
+  }),
+} satisfies Actions;

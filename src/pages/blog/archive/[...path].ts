@@ -1,7 +1,7 @@
 import { type PostMeta, postList } from '../../../posts';
+import type { Params } from './[...path].$types';
 
-// `[...path]` 匹配 `/blog/archive/2026` 和 `/blog/archive/2026/10`，匹配的部分是参数 `path`
-type ArchiveParams = { path: string };
+// `[...path]` 匹配 `/blog/archive/2026` 和 `/blog/archive/2026/10`，匹配的部分是参数 `path`，类型由 gemkit 生成
 
 const style = css`
   .posts {
@@ -10,7 +10,7 @@ const style = css`
   }
 `;
 
-@page<ArchiveParams, PostMeta[]>({
+@page<Params, PostMeta[]>({
   // 同构的 `load`，服务端渲染、预渲染和客户端导航时都会执行
   load: ({ params: { path } }) => postList.filter((post) => post.date.startsWith(path.replaceAll('/', '-'))),
   title: ({ params: { path } }) => `${i18n.get('archive')} ${path}`,
@@ -22,7 +22,7 @@ const style = css`
 })
 @adoptedStyle(style)
 export default class ArchivePage extends GemElement {
-  @property params?: ArchiveParams;
+  @property params?: Params;
   @property data?: PostMeta[];
 
   @template()

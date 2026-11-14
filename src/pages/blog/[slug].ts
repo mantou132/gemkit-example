@@ -1,4 +1,4 @@
-import type { PostData } from './[slug].server';
+import type { Params, ServerData } from './[slug].$types';
 
 const style = css`
   h1 {
@@ -14,16 +14,16 @@ const style = css`
   }
 `;
 
-type Post = PostData & { minutes: number };
+type Post = ServerData & { minutes: number };
 
 // 服务端数据来自同名的 `[slug].server.ts`，`load` 参数中的 `data` 是服务端数据
 @page<{ slug: string }, Post>({
-  load: ({ data: post }: { data: PostData }) => ({ ...post, minutes: Math.max(1, Math.round(post.words / 200)) }),
+  load: ({ data: post }: { data: ServerData }) => ({ ...post, minutes: Math.max(1, Math.round(post.words / 200)) }),
   title: ({ data }) => data.title,
 })
 @adoptedStyle(style)
 export default class PostPage extends GemElement {
-  @property params?: { slug: string };
+  @property params?: Params;
   @property data?: Post;
 
   @template()

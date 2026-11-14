@@ -25,15 +25,13 @@ export class AppLikeButtonElement extends GemElement {
 
   #state = createState({ likes: undefined as number | undefined });
 
-  // 参数和返回值的类型从 API 路由的处理函数推导
-  #setLikes = ({ likes }: { likes: number }) => this.#state({ likes });
-
   // 在文章之间导航时页面元素会重新创建，这个元素也是新的，不用处理 `slug` 改变
   @mounted()
-  #load = async () => this.#setLikes(await apis.api.likes(this.slug).GET());
+  #load = async () => this.#state(await apis.api.likes(this.slug).GET());
 
-  // 参数类型是 zod schema 的输入类型，`count` 有默认值可以省略，服务端校验它
-  #like = async () => this.#setLikes(await apis.api.likes(this.slug).POST());
+  // 参数类型是 zod schema 的输入类型，`count` 有默认值可以省略，服务端校验它，
+  // 返回值的类型从 API 路由的处理函数推导
+  #like = async () => this.#state(await apis.api.likes(this.slug).POST());
 
   @template()
   #content = () => html`<button @click=${this.#like}>♥ ${this.#state.likes ?? ''}</button>`;

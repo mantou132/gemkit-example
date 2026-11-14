@@ -16,9 +16,9 @@ const style = css`
 
 type Post = ServerData & { minutes: number };
 
-// 服务端数据来自同名的 `[slug].server.ts`，`load` 参数中的 `data` 是服务端数据
-@page<{ slug: string }, Post>({
-  load: ({ data: post }: { data: ServerData }) => ({ ...post, minutes: Math.max(1, Math.round(post.words / 200)) }),
+// 服务端数据来自同名的 `[slug].server.ts`，是 `load` 参数中的 `data`，类型参数依次是路由参数、`data` 和服务端数据
+@page<Params, Post, ServerData>({
+  load: ({ data: post }) => ({ ...post, minutes: Math.max(1, Math.round(post.words / 200)) }),
   title: ({ data }) => data.title,
 })
 @adoptedStyle(style)

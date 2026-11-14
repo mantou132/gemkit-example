@@ -1,7 +1,7 @@
-import type { ErrorData } from '@mantou/gemkit';
+import type { ErrorData, Params } from '@mantou/gemkit';
 
 // 出错时渲染，也是未匹配路径的 404 页面，错误信息是 `data`
-@page<{}, ErrorData>({ title: ({ data }) => (data.status === 404 ? i18n.get('notFound') : `Error ${data.status}`) })
+@page<Params, ErrorData>({ title: ({ data }) => (data.status === 404 ? i18n.get('notFound') : `Error ${data.status}`) })
 export default class ErrorPage extends GemElement {
   @property data?: ErrorData;
 

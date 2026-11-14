@@ -8,14 +8,6 @@ export interface Entry {
   date: string;
 }
 
-export interface GuestbookData {
-  entries: Entry[];
-  page: number;
-  pages: number;
-  /** 上次留言使用的名字，保存在 cookie 中 */
-  name: string;
-}
-
 const PAGE_SIZE = 5;
 const NAME_COOKIE = 'guestbook-name';
 
@@ -36,13 +28,14 @@ const entries: Entry[] = [];
 export const prerender = false;
 
 // 只改变查询参数（`?page=2`）的客户端导航也会重新执行
-export function load({ url, cookies }: ServerContext): GuestbookData {
+export function load({ url, cookies }: ServerContext) {
   const pages = Math.max(1, Math.ceil(entries.length / PAGE_SIZE));
   const page = Math.min(pages, Math.max(1, Number(url.searchParams.get('page')) || 1));
   return {
     entries: entries.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE),
     page,
     pages,
+    // 上次留言使用的名字，保存在 cookie 中
     name: cookies.get(NAME_COOKIE) || '',
   };
 }
